@@ -5,32 +5,34 @@
 /******************** Version: 1.0 *********************************/
 /*******************************************************************/
 #include<stdio.h>
+#include<stdint.h>
 
 /*Initialize some global data types*/
-char arr[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}};//Initialize the main array (Rows, Culomns)
-char checkarr[9];
-char flag=0;
-int i,j; //For loop counters
+uint8_t gu8_arr[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}};//Initialize the main array (Rows, Culomns)
+uint8_t gu8_checkarr[9];
+uint8_t gu8_flag=0;
+
+uint8_t gu8_i,gu8_j; //For loop counters
 
 /*Declaration of some functions*/
-void printNewXO(char *x_play,char *O_play);/*Function to print X&O after each play*/
-char CheckTheWinner(int NumOfGameTurns);/*Function to check the winner*/
+uint8_t printNewXO(uint8_t *u8arr_x_play,uint8_t *u8arr_O_play);/*Function to print X&O after each play*/
+uint8_t CheckTheWinner(uint8_t u8_NumOfGameTurns);/*Function to check the winner*/
 
 void main(void)
 {
 	/*Iocal data types*/
-	int NumOfGameTurns;
-	char CheckWinStatus=0;
-	char x_play[1],O_play[1];
+	uint8_t u8_NumOfGameTurns;
+	uint8_t u8_CheckWinStatus=0;
+	uint8_t u8arr_x_play[1],u8arr_O_play[1];
 	
 	/*Display the game in the beginning*/
 	printf("-------------------------");
 	printf("\n");
-	for(i=0;i<3;i++)
+	for(gu8_i=0;gu8_i<3;gu8_i++)//raws looping
 	{
-		for(j=0;j<3;j++)
+		for(gu8_j=0;gu8_j<3;gu8_j++)//culomns looping
 		{
-			printf("|   %c   ",arr[i][j]);
+			printf("|   %c   ",gu8_arr[gu8_i][gu8_j]);
 		}
 		printf("|");
 		printf("\n");
@@ -39,24 +41,24 @@ void main(void)
 	}
 	
 	/*the game turn 8 rounds*/
-	for(NumOfGameTurns=0;NumOfGameTurns<4;NumOfGameTurns++)
+	for(u8_NumOfGameTurns=0;u8_NumOfGameTurns<4;u8_NumOfGameTurns++)
 	{
 		printf("Please select the number where x Player wants to play");
 		printf("Player (x):");
-		scanf(" %s",&x_play);//X player play
+		scanf(" %s",&u8arr_x_play);//X player play
 		/*check if the player choise is available or not*/
-		if(*x_play>='1' && *x_play<='9'){
+		if(*u8arr_x_play>='1' && *u8arr_x_play<='9'){
 			/*check if this place is taken or not*/
-			for(i=0;checkarr[i]!='\0';i++)
+			for(gu8_i=0;gu8_checkarr[gu8_i]!='\0';gu8_i++)
 			{
-				*O_play='0';
+				*u8arr_O_play='0';
 				/*if yes*/
-				if((checkarr[i]==*x_play) || (checkarr[i]==*O_play))
+				if((gu8_checkarr[gu8_i]==*u8arr_x_play) || (gu8_checkarr[gu8_i]==*u8arr_O_play))
 				{
 					printf("This place is already taken.\nPlease Try agian.\n");
 					printf("Player (x):");
-					scanf(" %s",&x_play);
-					i=-1;// to check from the beginning of the checkarr
+					scanf(" %s",&u8arr_x_play);
+					gu8_i=-1;// to check from the beginning of the checkarr
 				}
 				else{}
 			}
@@ -68,15 +70,15 @@ void main(void)
 			{
 				printf("This choise is not exist.\nPlease try again\n");
 				printf("Player (x):");
-				scanf(" %s",&x_play);
-				if(*x_play>='1'&&*x_play<='9'){break;}
+				scanf(" %s",&u8arr_x_play);
+				if(*u8arr_x_play>='1'&&*u8arr_x_play<='9'){break;}
 				else{}
 			}
 		}
-		printNewXO(x_play,O_play);/*print new game after x&o players play*/
-		CheckWinStatus=CheckTheWinner(NumOfGameTurns);/*check if any of them won*/
+		printNewXO(u8arr_x_play,u8arr_O_play);/*print new game after x&o players play*/
+		u8_CheckWinStatus=CheckTheWinner(u8_NumOfGameTurns);/*check if any of them won*/
 			/*if yes stop the game*/
-			if(CheckWinStatus==1)
+			if(u8_CheckWinStatus==1)
 			{
 				break;
 			}
@@ -87,21 +89,21 @@ void main(void)
 			
 		printf("Please select the number where o Player wants to play");
 		printf("Player (O):");
-		scanf(" %s",&O_play);/*O player plays*/
+		scanf(" %s",&u8arr_O_play);/*O player plays*/
 		/*check if the player choise is available or not*/
-		if(*O_play>='1' &&* O_play<='9')
+		if(*u8arr_O_play>='1' &&* u8arr_O_play<='9')
 		{
 			/*check if this place is taken or not*/
-			for(j=0;checkarr[j]!='\0';j++)
+			for(gu8_j=0;gu8_checkarr[gu8_j]!='\0';gu8_j++)
 			{
-				*x_play='0';
+				*u8arr_x_play='0';
 				/*if yes*/
-				if((checkarr[j]==*x_play) || (checkarr[j]==*O_play))
+				if((gu8_checkarr[gu8_j]==*u8arr_x_play) || (gu8_checkarr[gu8_j]==*u8arr_O_play))
 				{
 					printf("This place is already taken.\nPlease Try agian.\n");
 					printf("Player (O):");
-					scanf(" %s",&O_play);
-					j=-1;// to check from the beginning of the checkarr
+					scanf(" %s",&u8arr_O_play);
+					gu8_j=-1;// to check from the beginning of the checkarr
 				}
 			}
 		}
@@ -113,15 +115,15 @@ void main(void)
 			{
 				printf("This choise is not exist.\nPlease try again\n");
 				printf("Player (O):");
-				scanf(" %s",&O_play);
-				if(*O_play>='1'&&*O_play<='9'){break;}
+				scanf(" %s",&u8arr_O_play);
+				if(*u8arr_O_play>='1'&&*u8arr_O_play<='9'){break;}
 				else{}
 			}
 		}
-		printNewXO(x_play,O_play);/*print new game after x&o players play*/
-		CheckWinStatus=CheckTheWinner(NumOfGameTurns);/*check if any of them won*/
+		printNewXO(u8arr_x_play,u8arr_O_play);/*print new game after x&o players play*/
+		u8_CheckWinStatus=CheckTheWinner(u8_NumOfGameTurns);/*check if any of them won*/
 			/*if yes stop the game*/
-			if(CheckWinStatus==1)
+			if(u8_CheckWinStatus==1)
 			{
 				break;
 			}
@@ -130,42 +132,49 @@ void main(void)
 			
 			}
 	}
-	if(flag==0)
+	if(gu8_flag==0)
 	{
 		printf("Player (x):");
-		scanf(" %s",&x_play);
-		printNewXO(x_play,O_play);/*print new game after x&o players play*/
-		CheckWinStatus=CheckTheWinner(NumOfGameTurns);/*check if any of them won*/
+		scanf(" %s",&u8arr_x_play);
+		printNewXO(u8arr_x_play,u8arr_O_play);/*print new game after x&o players play*/
+		u8_CheckWinStatus=CheckTheWinner(u8_NumOfGameTurns);/*check if any of them won*/
 	}
 	else{}
 }
 
-void printNewXO(char *x_play,char *O_play)
+uint8_t printNewXO(uint8_t *u8arr_x_play,uint8_t *u8arr_O_play)
 {
-	static char checkarrcounter=0;
+	uint8_t u8_Errorcheck=0;
+	if((*u8arr_x_play==0) && (*u8arr_O_play==0))
+	{
+		u8_Errorcheck=1;
+	}
+	else
+	{
+		static uint8_t checkarrcounter=0;
 	printf("-------------------------");
 	printf("\n");
-	for(i=0;i<3;i++)
+	for(gu8_i=0;gu8_i<3;gu8_i++)
 	{
-		for(j=0;j<3;j++)
+		for(gu8_j=0;gu8_j<3;gu8_j++)
 		{
-			if(arr[i][j]==*x_play)
+			if(gu8_arr[gu8_i][gu8_j]==*u8arr_x_play)
 			{
-				checkarr[checkarrcounter]=arr[i][j];
-				arr[i][j]='X';
+				gu8_checkarr[checkarrcounter]=gu8_arr[gu8_i][gu8_j];
+				gu8_arr[gu8_i][gu8_j]='X';
 				printf("|   X   ");
 				checkarrcounter++;
 			}
-			else if(arr[i][j]==*O_play)
+			else if(gu8_arr[gu8_i][gu8_j]==*u8arr_O_play)
 			{
-				checkarr[checkarrcounter]=arr[i][j];
-				arr[i][j]='O';
+				gu8_checkarr[checkarrcounter]=gu8_arr[gu8_i][gu8_j];
+				gu8_arr[gu8_i][gu8_j]='O';
 				printf("|   O   ");
 				checkarrcounter++;
 			}
 			else
 			{
-				printf("|   %c   ",arr[i][j]);
+				printf("|   %c   ",gu8_arr[gu8_i][gu8_j]);
 			}
 		}
 		printf("|");
@@ -173,135 +182,137 @@ void printNewXO(char *x_play,char *O_play)
 		printf("-------------------------");
 		printf("\n");
 	}
+	}
+	return u8_Errorcheck;
 }
 
-char CheckTheWinner(int NumOfGameTurns)
+uint8_t CheckTheWinner(uint8_t u8_NumOfGameTurns)
 {
-	char ErrorCheck=0;
-	if((arr[0][0]==arr[0][1]) && (arr[0][0]==arr[0][2]))
+	uint8_t u8_ErrorCheck=0;
+	if((gu8_arr[0][0]==gu8_arr[0][1]) && (gu8_arr[0][0]==gu8_arr[0][2]))
 	{
-		if(arr[0][0]=='X')
+		if(gu8_arr[0][0]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[0][0]=='O')
+		else if(gu8_arr[0][0]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[0][0]==arr[1][0]) && (arr[0][0]==arr[2][0]))
+	else if((gu8_arr[0][0]==gu8_arr[1][0]) && (gu8_arr[0][0]==gu8_arr[2][0]))
 	{
-		if(arr[0][0]=='X')
+		if(gu8_arr[0][0]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[0][0]=='O')
+		else if(gu8_arr[0][0]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[0][1]==arr[1][1]) && (arr[0][1]==arr[2][1]))
+	else if((gu8_arr[0][1]==gu8_arr[1][1]) && (gu8_arr[0][1]==gu8_arr[2][1]))
 	{
-		if(arr[0][1]=='X')
+		if(gu8_arr[0][1]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[0][1]=='O')
+		else if(gu8_arr[0][1]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[0][2]==arr[1][2]) && (arr[0][2]==arr[2][2]))
+	else if((gu8_arr[0][2]==gu8_arr[1][2]) && (gu8_arr[0][2]==gu8_arr[2][2]))
 	{
-		if(arr[0][2]=='X')
+		if(gu8_arr[0][2]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[0][2]=='O')
+		else if(gu8_arr[0][2]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[1][0]==arr[1][1]) && (arr[1][0]==arr[1][2]))
+	else if((gu8_arr[1][0]==gu8_arr[1][1]) && (gu8_arr[1][0]==gu8_arr[1][2]))
 	{
-		if(arr[1][0]=='X')
+		if(gu8_arr[1][0]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[1][0]=='O')
+		else if(gu8_arr[1][0]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[2][0]==arr[2][1]) && (arr[2][0]==arr[2][2]))
+	else if((gu8_arr[2][0]==gu8_arr[2][1]) && (gu8_arr[2][0]==gu8_arr[2][2]))
 	{
-		if(arr[2][0]=='X')
+		if(gu8_arr[2][0]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[2][0]=='O')
+		else if(gu8_arr[2][0]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[0][0]==arr[1][1]) && (arr[0][0]==arr[2][2]))
+	else if((gu8_arr[0][0]==gu8_arr[1][1]) && (gu8_arr[0][0]==gu8_arr[2][2]))
 	{
-		if(arr[0][0]=='X')
+		if(gu8_arr[0][0]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[0][0]=='O')
+		else if(gu8_arr[0][0]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if((arr[0][2]==arr[1][1]) && (arr[0][2]==arr[2][0]))
+	else if((gu8_arr[0][2]==gu8_arr[1][1]) && (gu8_arr[0][2]==gu8_arr[2][0]))
 	{
-		if(arr[0][2]=='X')
+		if(gu8_arr[0][2]=='X')
 		{
 			printf("X player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
-		else if(arr[0][2]=='O')
+		else if(gu8_arr[0][2]=='O')
 		{
 			printf("O player is winner.\n");
-			ErrorCheck=1;
-			flag=1;
+			u8_ErrorCheck=1;
+			gu8_flag=1;
 		}
 	}
-	else if(NumOfGameTurns==4)
+	else if(u8_NumOfGameTurns==4)
 	{
 		printf("Draw Game.");
-		ErrorCheck=1;
+		u8_ErrorCheck=1;
 	}
-	return ErrorCheck;
+	return u8_ErrorCheck;
 }
